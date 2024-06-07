@@ -17,3 +17,7 @@ halo2curves = { git = "https://github.com/zhenfeizhang/halo2curves", default-fea
 members = [
     "arith"
 ]
+
+[[bin]]
+name = "expander-exec"
+path = "src/exec.rs"
