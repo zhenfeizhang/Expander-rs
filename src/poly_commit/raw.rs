@@ -10,7 +10,6 @@ pub struct RawCommitment<F> {
 }
 
 impl<F: Field + Serde> RawCommitment<F> {
-
     #[inline(always)]
     /// size in bytes of the commitment
     pub fn size(&self) -> usize {
