@@ -13,7 +13,7 @@ pub mod m31_neon;
 pub use m31_neon::PackedM31;
 use rand::RngCore;
 
-use crate::{Field, FieldSerde};
+use crate::{Field, Serde};
 use std::{
     iter::{Product, Sum},
     mem::size_of,
@@ -37,7 +37,7 @@ pub struct M31 {
     pub v: u32,
 }
 
-impl FieldSerde for M31 {
+impl Serde for M31 {
     #[inline(always)]
     fn serialize_into(&self, buffer: &mut [u8]) {
         buffer[..M31::SIZE].copy_from_slice(unsafe {

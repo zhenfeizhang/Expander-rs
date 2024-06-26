@@ -1,6 +1,6 @@
 //! This module implements the core GKR IOP.
 
-use arith::{Field, FieldSerde, MultiLinearPoly, VectorizedField};
+use arith::{Field, MultiLinearPoly, Serde, VectorizedField};
 use ark_std::{end_timer, start_timer};
 
 use crate::{sumcheck_prove_gkr_layer, Circuit, Config, GkrScratchpad, Transcript};
@@ -14,7 +14,7 @@ pub fn gkr_prove<F>(
     config: &Config,
 ) -> (Vec<F>, Vec<Vec<F::BaseField>>, Vec<Vec<F::BaseField>>)
 where
-    F: VectorizedField + FieldSerde,
+    F: VectorizedField + Serde,
     F::PackedBaseField: Field<BaseField = F::BaseField>,
 {
     let timer = start_timer!(|| "gkr prove");

@@ -11,6 +11,8 @@ use std::{
     ops::{Add, AddAssign, Mul, MulAssign, Neg, Sub, SubAssign},
 };
 
+use crate::Serde;
+
 /// Field definitions.
 pub trait Field:
     Copy
@@ -47,7 +49,7 @@ pub trait Field:
     const INV_2: Self;
 
     /// type of the base field, can be itself
-    type BaseField: Field + FieldSerde;
+    type BaseField: Field + Serde;
 
     // ====================================
     // constants
@@ -127,13 +129,4 @@ pub trait VectorizedField: Field {
 
     /// expose the internal elements mutable
     fn mut_packed_slices(&mut self) -> &mut [Self::PackedBaseField];
-}
-
-/// Serde for Fields
-pub trait FieldSerde {
-    /// serialize self into bytes
-    fn serialize_into(&self, buffer: &mut [u8]);
-
-    /// deserialize bytes into field
-    fn deserialize_from(buffer: &[u8]) -> Self;
 }

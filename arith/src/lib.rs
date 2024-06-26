@@ -6,5 +6,8 @@ pub use field::*;
 mod poly;
 pub use poly::*;
 
+mod serdes;
+pub use serdes::*;
+
 #[cfg(test)]
 mod tests;

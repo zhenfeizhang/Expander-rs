@@ -1,13 +1,16 @@
 //! This module implements the whole GKR prover, including the IOP and PCS.
 
-use arith::{Field, FieldSerde, VectorizedField};
+use arith::{Field, Serde, VectorizedField};
 use ark_std::{end_timer, start_timer};
 
 use crate::{gkr_prove, Circuit, Config, GkrScratchpad, Proof, RawCommitment, Transcript};
 
+/// Grind adds additional `config.grinding_bits` security to the prover
+///
+
 pub fn grind<F: Field>(transcript: &mut Transcript, config: &Config) {
     let timer = start_timer!(|| format!("grind {} bits", config.grinding_bits));
-
+    // We extract `256 / config.field_size` field elements from the transcript
     let initial_hash = transcript.challenge_fs::<F>(256 / config.field_size);
     let mut hash_bytes = [0u8; 256 / 8];
     let mut offset = 0;
@@ -30,9 +33,12 @@ pub struct Prover<F: Field> {
     sp: Vec<GkrScratchpad<F>>,
 }
 
-impl<F: VectorizedField + FieldSerde> Prover<F> {
+impl<F: VectorizedField + Serde> Prover<F> {
     pub fn new(config: &Config) -> Self {
-        // assert_eq!(config.field_type, crate::config::FieldType::M31);
+        assert!(
+            (config.field_type == crate::config::FieldType::M31)
+                | (config.field_type == crate::config::FieldType::BN254)
+        );
         assert_eq!(config.fs_hash, crate::config::FiatShamirHashType::SHA256);
         assert_eq!(
             config.polynomial_commitment_type,

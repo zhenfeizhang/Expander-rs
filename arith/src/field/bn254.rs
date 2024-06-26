@@ -4,7 +4,7 @@ use halo2curves::ff::{Field as Halo2Field, FromUniformBytes};
 use halo2curves::{bn256::Fr, ff::PrimeField};
 use rand::RngCore;
 
-use crate::{Field, FieldSerde};
+use crate::{Field, Serde};
 
 mod vectorized_bn254;
 
@@ -109,7 +109,7 @@ impl Field for Fr {
     }
 }
 
-impl FieldSerde for Fr {
+impl Serde for Fr {
     fn serialize_into(&self, buffer: &mut [u8]) {
         buffer.copy_from_slice(self.to_bytes().as_slice())
     }

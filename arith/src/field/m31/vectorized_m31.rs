@@ -5,7 +5,7 @@ use super::m31_avx::{PackedM31, M31_PACK_SIZE, M31_VECTORIZE_SIZE, PACKED_INV_2}
 #[cfg(target_arch = "aarch64")]
 use super::m31_neon::{PackedM31, M31_PACK_SIZE, M31_VECTORIZE_SIZE, PACKED_INV_2};
 
-use crate::{Field, FieldSerde, VectorizedField, M31};
+use crate::{Field, Serde, VectorizedField, M31};
 use std::{
     iter::{Product, Sum},
     mem::size_of,
@@ -24,7 +24,7 @@ pub const VECTORIZEDM31_INV_2: VectorizedM31 = VectorizedM31 {
     v: [PackedM31 { v: PACKED_INV_2 }; VectorizedM31::VECTORIZE_SIZE],
 };
 
-impl FieldSerde for VectorizedM31 {
+impl Serde for VectorizedM31 {
     // todo: turn serialization functions into a trait
     // perhaps derive from Serde or ark-serde
 

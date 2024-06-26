@@ -1,4 +1,4 @@
-use arith::{Field, FieldSerde};
+use arith::{Field, Serde};
 
 use crate::{Proof, SHA256hasher};
 
@@ -43,7 +43,7 @@ impl Transcript {
         }
     }
 
-    pub fn append_f<F: Field + FieldSerde>(&mut self, f: F) {
+    pub fn append_f<F: Field + Serde>(&mut self, f: F) {
         let cur_size = self.proof.bytes.len();
         self.proof.bytes.resize(cur_size + F::SIZE, 0);
         f.serialize_into(&mut self.proof.bytes[cur_size..]);
