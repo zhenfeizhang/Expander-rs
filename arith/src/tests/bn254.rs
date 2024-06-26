@@ -1,4 +1,4 @@
-use crate::{FieldSerde, VectorizedFr};
+use crate::{Serde, VectorizedFr};
 use halo2curves::bn256::Fr;
 
 use super::field::{

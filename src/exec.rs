@@ -4,7 +4,7 @@ use std::{
     vec,
 };
 
-use arith::{Field, FieldSerde, VectorizedM31};
+use arith::{Field, Serde, VectorizedM31};
 use expander_rs::{Circuit, Config, Proof, Prover, Verifier};
 use warp::Filter;
 

@@ -1,4 +1,4 @@
-use arith::{Field, FieldSerde};
+use arith::{Field, Serde};
 
 /// Proof. In the serialized mode.
 #[derive(Debug, Clone, Default)]
@@ -21,7 +21,7 @@ impl Proof {
     }
 
     #[inline(always)]
-    pub fn get_next_and_step<F: Field + FieldSerde>(&mut self) -> F {
+    pub fn get_next_and_step<F: Field + Serde>(&mut self) -> F {
         let ret = F::deserialize_from(&self.bytes[self.idx..]);
         self.step(F::SIZE);
         ret

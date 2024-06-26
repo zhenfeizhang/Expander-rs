@@ -1,4 +1,4 @@
-use arith::{Field, FieldSerde, VectorizedField, VectorizedFr, VectorizedM31};
+use arith::{Field, Serde, VectorizedField, VectorizedFr, VectorizedM31};
 use expander_rs::{Circuit, CircuitLayer, Config, GateAdd, GateMul, Prover, Verifier};
 use rand::Rng;
 use sha2::Digest;
@@ -46,7 +46,7 @@ fn test_gkr_correctness() {
 
 fn test_gkr_correctness_helper<F>(config: &Config)
 where
-    F: VectorizedField + FieldSerde,
+    F: VectorizedField + Serde,
     F::PackedBaseField: Field<BaseField = F::BaseField>,
 {
     println!("Config created.");

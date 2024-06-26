@@ -1,6 +1,6 @@
 use std::vec;
 
-use arith::{Field, FieldSerde};
+use arith::{Field, Serde};
 use ark_std::{end_timer, start_timer};
 
 use crate::{
@@ -50,7 +50,7 @@ fn eval_sparse_circuit_connect_poly<F: Field, const INPUT_NUM: usize>(
 // todo: FIXME
 #[allow(clippy::too_many_arguments)]
 #[allow(clippy::type_complexity)]
-fn sumcheck_verify_gkr_layer<F: Field + FieldSerde>(
+fn sumcheck_verify_gkr_layer<F: Field + Serde>(
     layer: &CircuitLayer<F>,
     rz0: &[Vec<F::BaseField>],
     rz1: &[Vec<F::BaseField>],
@@ -149,7 +149,7 @@ fn sumcheck_verify_gkr_layer<F: Field + FieldSerde>(
 
 // todo: FIXME
 #[allow(clippy::type_complexity)]
-pub fn gkr_verify<F: Field + FieldSerde>(
+pub fn gkr_verify<F: Field + Serde>(
     circuit: &Circuit<F>,
     claimed_v: &[F],
     transcript: &mut Transcript,
@@ -219,7 +219,7 @@ impl Verifier {
         }
     }
 
-    pub fn verify<F: Field + FieldSerde>(
+    pub fn verify<F: Field + Serde>(
         &self,
         circuit: &Circuit<F>,
         claimed_v: &[F],
@@ -228,7 +228,10 @@ impl Verifier {
         let timer = start_timer!(|| "verify");
 
         let poly_size = circuit.layers.first().unwrap().input_vals.evals.len();
-        let commitment = RawCommitment::deserialize_from(&proof.bytes, poly_size);
+        println!("verify poly_size: {}", poly_size);
+        println!("proof bytes: {}", proof.bytes.len());
+        let commitment =
+            RawCommitment::deserialize_from(&proof.bytes[..poly_size * F::SIZE], poly_size);
 
         let mut transcript = Transcript::new();
         transcript.append_u8_slice(&proof.bytes, commitment.size());
@@ -254,7 +257,7 @@ impl Verifier {
                 // for Raw, no need to load from proof
                 for i in 0..self.config.get_num_repetitions() {
                     log::trace!("rz0[{}].size() = {}", i, rz0[i].len());
-                    log::trace!("Poly_vals.size() = {}", commitment.poly_vals.len());
+                    log::trace!("Poly_vals.size() = {}", commitment.mpoly.len());
 
                     let v1 = commitment.verify(&rz0[i], claimed_v0[i]);
                     let v2 = commitment.verify(&rz1[i], claimed_v1[i]);

@@ -7,7 +7,7 @@ use std::{
 use halo2curves::bn256::Fr;
 use rand::RngCore;
 
-use crate::{Field, FieldSerde, VectorizedField};
+use crate::{Field, Serde, VectorizedField};
 
 #[derive(Debug, Clone, Copy, Default, PartialEq)]
 pub struct VectorizedFr {
@@ -16,7 +16,7 @@ pub struct VectorizedFr {
 
 pub const VECTORIZEDM31_INV_2: VectorizedFr = VectorizedFr { v: [Fr::INV_2; 1] };
 
-impl FieldSerde for VectorizedFr {
+impl Serde for VectorizedFr {
     // todo: turn serialization functions into a trait
     // perhaps derive from Serde or ark-serde
 

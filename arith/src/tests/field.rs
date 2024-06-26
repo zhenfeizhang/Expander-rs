@@ -1,7 +1,7 @@
 use ark_std::{end_timer, start_timer, test_rng};
 use rand::{Rng, RngCore};
 
-use crate::{Field, FieldSerde, VectorizedField};
+use crate::{Field, Serde, VectorizedField};
 
 pub(crate) fn test_basic_field_op<F: Field>() {
     let mut rng = rand::thread_rng();
@@ -249,16 +249,13 @@ fn random_expansion_tests<F: Field, R: RngCore>(mut rng: R, type_name: String) {
     end_timer!(start);
 }
 
-pub fn random_vectorized_field_tests<F: VectorizedField + FieldSerde>(type_name: String) {
+pub fn random_vectorized_field_tests<F: VectorizedField + Serde>(type_name: String) {
     let mut rng = test_rng();
 
     random_serdes_tests::<F, _>(&mut rng, type_name);
 }
 
-fn random_serdes_tests<F: VectorizedField + FieldSerde, R: RngCore>(
-    mut rng: R,
-    _type_name: String,
-) {
+fn random_serdes_tests<F: VectorizedField + Serde, R: RngCore>(mut rng: R, _type_name: String) {
     let start = start_timer!(|| format!("expansion {}", _type_name));
     for _ in 0..1000 {
         // convert a into and from bytes
