@@ -10,12 +10,17 @@ pub struct RawCommitment<F> {
 }
 
 impl<F: Field + Serde> RawCommitment<F> {
+
+    #[inline(always)]
+    /// size in bytes of the commitment
     pub fn size(&self) -> usize {
         self.mpoly.len() * F::SIZE
     }
+
     pub fn serialize_into(&self, buffer: &mut [u8]) {
         self.mpoly.serialize_into(buffer)
     }
+
     pub fn deserialize_from(buffer: &[u8], poly_size: usize) -> Self {
         assert_eq!(buffer.len(), poly_size * F::SIZE);
         RawCommitment {
@@ -25,12 +30,15 @@ impl<F: Field + Serde> RawCommitment<F> {
 }
 
 impl<F: Field + Serde> RawCommitment<F> {
+    #[inline(always)]
     pub fn new(poly_vals: Vec<F>) -> Self {
         RawCommitment {
             mpoly: MultiLinearPoly::<F>::new(poly_vals),
         }
     }
+
+    #[inline(always)]
     pub fn verify(&self, x: &[F::BaseField], y: F) -> bool {
-        y == MultiLinearPoly::<F>::eval_multilinear(&self.mpoly.evals, x)
+        y == self.mpoly.eval_at(x)
     }
 }

@@ -82,6 +82,7 @@ impl<F: VectorizedField + Serde> Prover<F> {
             std::slice::from_raw_parts_mut(buffer_v.as_ptr() as *mut u8, commitment.size())
         };
         commitment.serialize_into(buffer);
+
         let mut transcript = Transcript::new();
         transcript.append_u8_slice(buffer, commitment.size());
 
@@ -94,6 +95,7 @@ impl<F: VectorizedField + Serde> Prover<F> {
             crate::config::PolynomialCommitmentType::Raw => {
                 // no need to update transcript
             }
+            // the rest of the commitment types are not yet implemented
             _ => todo!(),
         }
 

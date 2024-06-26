@@ -1,6 +1,6 @@
 //! This module implements the core GKR IOP.
 
-use arith::{Field, MultiLinearPoly, Serde, VectorizedField};
+use arith::{Field, Serde, VectorizedField};
 use ark_std::{end_timer, start_timer};
 
 use crate::{sumcheck_prove_gkr_layer, Circuit, Config, GkrScratchpad, Transcript};
@@ -35,10 +35,7 @@ where
     let mut claimed_v = vec![];
 
     for t in rz0.iter().take(config.get_num_repetitions()) {
-        claimed_v.push(MultiLinearPoly::<F>::eval_multilinear(
-            &circuit.layers.last().unwrap().output_vals.evals,
-            t,
-        ))
+        claimed_v.push(circuit.layers.last().unwrap().output_vals.eval_at(t))
     }
 
     for i in (0..layer_num).rev() {
