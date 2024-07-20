@@ -49,8 +49,8 @@ pub trait Field:
     /// Inverse of 2
     const INV_2: Self;
 
-    /// type of the base field, can be itself
-    type BaseField: Field + FieldSerde;
+    // /// type of the base field, can be itself
+    // type BaseField: Field + FieldSerde;
 
     // ====================================
     // constants
@@ -95,17 +95,17 @@ pub trait Field:
     /// find the inverse of the element; return None if not exist
     fn inv(&self) -> Option<Self>;
 
-    /// Add the field element with its base field element
-    fn add_base_elem(&self, rhs: &Self::BaseField) -> Self;
+    // /// Add the field element with its base field element
+    // fn add_base_elem(&self, rhs: &Self::BaseField) -> Self;
 
-    /// Add the field element with its base field element
-    fn add_assign_base_elem(&mut self, rhs: &Self::BaseField);
+    // /// Add the field element with its base field element
+    // fn add_assign_base_elem(&mut self, rhs: &Self::BaseField);
 
-    /// multiply the field element with its base field element
-    fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self;
+    // /// multiply the field element with its base field element
+    // fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self;
 
-    /// multiply the field element with its base field element
-    fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField);
+    // /// multiply the field element with its base field element
+    // fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField);
 
     /// expose the element as u32.
     fn as_u32_unchecked(&self) -> u32;

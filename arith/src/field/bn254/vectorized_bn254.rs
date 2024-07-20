@@ -48,7 +48,7 @@ impl Field for VectorizedFr {
 
     const INV_2: Self = VECTORIZEDM31_INV_2;
 
-    type BaseField = Fr;
+    // type BaseField = Fr;
 
     #[inline(always)]
     fn zero() -> Self {
@@ -82,25 +82,25 @@ impl Field for VectorizedFr {
         unimplemented!()
     }
 
-    #[inline(always)]
-    fn add_base_elem(&self, _rhs: &Self::BaseField) -> Self {
-        unimplemented!()
-    }
+    // #[inline(always)]
+    // fn add_base_elem(&self, _rhs: &Self::BaseField) -> Self {
+    //     unimplemented!()
+    // }
 
-    #[inline(always)]
-    fn add_assign_base_elem(&mut self, rhs: &Self::BaseField) {
-        *self += rhs;
-    }
+    // #[inline(always)]
+    // fn add_assign_base_elem(&mut self, rhs: &Self::BaseField) {
+    //     *self += rhs;
+    // }
 
-    #[inline(always)]
-    fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self {
-        *self * rhs
-    }
+    // #[inline(always)]
+    // fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self {
+    //     *self * rhs
+    // }
 
-    #[inline(always)]
-    fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField) {
-        *self = *self * rhs;
-    }
+    // #[inline(always)]
+    // fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField) {
+    //     *self = *self * rhs;
+    // }
 
     fn as_u32_unchecked(&self) -> u32 {
         unimplemented!("self is a vector, cannot convert to u32")

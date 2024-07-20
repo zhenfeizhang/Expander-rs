@@ -83,7 +83,7 @@ impl Field for PackedM31 {
 
     const INV_2: Self = Self { v: PACKED_INV_2 };
 
-    type BaseField = M31;
+    // type BaseField = M31;
 
     #[inline(always)]
     fn zero() -> Self {
@@ -149,25 +149,25 @@ impl Field for PackedM31 {
         unimplemented!()
     }
 
-    #[inline(always)]
-    fn add_base_elem(&self, _rhs: &Self::BaseField) -> Self {
-        unimplemented!()
-    }
+    // #[inline(always)]
+    // fn add_base_elem(&self, _rhs: &Self::BaseField) -> Self {
+    //     unimplemented!()
+    // }
 
-    #[inline(always)]
-    fn add_assign_base_elem(&mut self, _rhs: &Self::BaseField) {
-        unimplemented!()
-    }
+    // #[inline(always)]
+    // fn add_assign_base_elem(&mut self, _rhs: &Self::BaseField) {
+    //     unimplemented!()
+    // }
 
-    #[inline(always)]
-    fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self {
-        *self * rhs
-    }
+    // #[inline(always)]
+    // fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self {
+    //     *self * rhs
+    // }
 
-    #[inline(always)]
-    fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField) {
-        *self = *self * rhs;
-    }
+    // #[inline(always)]
+    // fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField) {
+    //     *self = *self * rhs;
+    // }
 
     fn as_u32_unchecked(&self) -> u32 {
         unimplemented!("self is a vector, cannot convert to u32")

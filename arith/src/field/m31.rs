@@ -93,7 +93,7 @@ impl Field for M31 {
 
     const INV_2: M31 = M31 { v: 1 << 30 };
 
-    type BaseField = M31;
+    // type BaseField = M31;
 
     #[inline(always)]
     fn zero() -> Self {
@@ -132,25 +132,25 @@ impl Field for M31 {
         self.try_inverse()
     }
 
-    #[inline(always)]
-    fn add_base_elem(&self, rhs: &Self::BaseField) -> Self {
-        *self + *rhs
-    }
+    // #[inline(always)]
+    // fn add_base_elem(&self, rhs: &Self::BaseField) -> Self {
+    //     *self + *rhs
+    // }
 
-    #[inline(always)]
-    fn add_assign_base_elem(&mut self, rhs: &Self::BaseField) {
-        *self += rhs
-    }
+    // #[inline(always)]
+    // fn add_assign_base_elem(&mut self, rhs: &Self::BaseField) {
+    //     *self += rhs
+    // }
 
-    #[inline(always)]
-    fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self {
-        *self * rhs
-    }
+    // #[inline(always)]
+    // fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self {
+    //     *self * rhs
+    // }
 
-    #[inline(always)]
-    fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField) {
-        *self *= rhs;
-    }
+    // #[inline(always)]
+    // fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField) {
+    //     *self *= rhs;
+    // }
 
     #[inline(always)]
     fn as_u32_unchecked(&self) -> u32 {

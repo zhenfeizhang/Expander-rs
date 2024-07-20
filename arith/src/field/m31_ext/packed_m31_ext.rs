@@ -67,7 +67,7 @@ impl Field for PackedM31Ext3 {
     // };
     const INV_2: Self = todo!();
 
-    type BaseField = PackedM31;
+    // type BaseField = PackedM31;
 
     #[inline(always)]
     fn zero() -> Self {
@@ -116,17 +116,17 @@ impl Field for PackedM31Ext3 {
         unimplemented!()
     }
 
-    #[inline(always)]
-    fn add_base_elem(&self, rhs: &Self::BaseField) -> Self {
-        let mut res = *self;
-        res.v[0] += rhs;
-        res
-    }
+    // #[inline(always)]
+    // fn add_base_elem(&self, rhs: &Self::BaseField) -> Self {
+    //     let mut res = *self;
+    //     res.v[0] += rhs;
+    //     res
+    // }
 
-    #[inline(always)]
-    fn add_assign_base_elem(&mut self, rhs: &Self::BaseField) {
-        *self = self.add_base_elem(rhs);
-    }
+    // #[inline(always)]
+    // fn add_assign_base_elem(&mut self, rhs: &Self::BaseField) {
+    //     *self = self.add_base_elem(rhs);
+    // }
 
     /// Squaring
     #[inline(always)]
@@ -139,17 +139,17 @@ impl Field for PackedM31Ext3 {
         // Self { v: res }
     }
 
-    #[inline(always)]
-    fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self {
-        Self {
-            v: [self.v[0] * rhs, self.v[1] * rhs, self.v[2] * rhs],
-        }
-    }
+    // #[inline(always)]
+    // fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self {
+    //     Self {
+    //         v: [self.v[0] * rhs, self.v[1] * rhs, self.v[2] * rhs],
+    //     }
+    // }
 
-    #[inline(always)]
-    fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField) {
-        *self = self.mul_base_elem(rhs);
-    }
+    // #[inline(always)]
+    // fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField) {
+    //     *self = self.mul_base_elem(rhs);
+    // }
 
     #[inline(always)]
     fn as_u32_unchecked(&self) -> u32 {

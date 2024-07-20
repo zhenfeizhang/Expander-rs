@@ -4,12 +4,15 @@ use std::{
     thread,
 };
 
-use arith::{Field, FieldSerde, VectorizedField, VectorizedFr, VectorizedM31};
+use arith::{Field, FieldSerde, VectorizedField,
+    //  VectorizedFr, 
+     VectorizedM31};
 use clap::Parser;
 use expander_rs::{Circuit, Config, Prover};
 
 #[cfg(target_arch = "x86_64")]
 use arith::VectorizedM31Ext3;
+use halo2curves::bn256::Fr;
 
 const FILENAME_MUL: &str = "data/ExtractedCircuitMul.txt";
 const FILENAME_ADD: &str = "data/ExtractedCircuitAdd.txt";
@@ -37,18 +40,20 @@ fn main() {
 
     match args.field.as_str() {
         "m31" => run_benchmark::<VectorizedM31>(&args, Config::m31_config()),
-        #[cfg(target_arch = "x86_64")]
-        "m31ext3" => run_benchmark::<VectorizedM31Ext3>(&args, Config::m31_ext3_config()),
-        "fr" => run_benchmark::<VectorizedFr>(&args, Config::bn254_config()),
+        // #[cfg(target_arch = "x86_64")]
+        // "m31ext3" => run_benchmark::<VectorizedM31Ext3>(&args, Config::m31_ext3_config()),
+        "fr" => run_benchmark::<Fr>(&args, Config::bn254_config()),
         _ => unreachable!(),
     };
 }
 
 fn run_benchmark<VecF>(args: &Args, config: Config)
 where
-    VecF: VectorizedField + FieldSerde + Send + 'static,
-    VecF::BaseField: Send,
-    VecF::PackedBaseField: Field<BaseField = VecF::BaseField>,
+    VecF: Field + FieldSerde + Send + 'static,
+    // where
+    //     VecF: VectorizedField + FieldSerde + Send + 'static,
+    //     VecF::BaseField: Send,
+    //     VecF::PackedBaseField: Field<BaseField = VecF::BaseField>,
 {
     println!("benchmarking keccak over {}", args.field);
     println!(
@@ -88,8 +93,7 @@ where
                     // update cnt
                     let mut cnt = partial_proof_cnt.lock().unwrap();
                     const CIRCUIT_COPY_SIZE: usize = 8;
-                    let proof_cnt_this_round =
-                        CIRCUIT_COPY_SIZE * VecF::PACK_SIZE * VecF::VECTORIZE_SIZE;
+                    let proof_cnt_this_round = CIRCUIT_COPY_SIZE * 16; // VecF::PACK_SIZE * VecF::VECTORIZE_SIZE;
                     *cnt += proof_cnt_this_round;
                 }
             })

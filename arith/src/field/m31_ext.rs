@@ -70,7 +70,7 @@ impl Field for M31Ext3 {
         v: [M31::INV_2, M31 { v: 0 }, M31 { v: 0 }],
     };
 
-    type BaseField = M31;
+    // type BaseField = M31;
 
     #[inline(always)]
     fn zero() -> Self {
@@ -127,17 +127,17 @@ impl Field for M31Ext3 {
         // self.try_inverse()
     }
 
-    #[inline(always)]
-    fn add_base_elem(&self, rhs: &Self::BaseField) -> Self {
-        let mut res = *self;
-        res.v[0] += rhs;
-        res
-    }
+    // #[inline(always)]
+    // fn add_base_elem(&self, rhs: &Self::BaseField) -> Self {
+    //     let mut res = *self;
+    //     res.v[0] += rhs;
+    //     res
+    // }
 
-    #[inline(always)]
-    fn add_assign_base_elem(&mut self, rhs: &Self::BaseField) {
-        *self += Self::from(rhs)
-    }
+    // #[inline(always)]
+    // fn add_assign_base_elem(&mut self, rhs: &Self::BaseField) {
+    //     *self += Self::from(rhs)
+    // }
 
     /// Squaring
     #[inline(always)]
@@ -149,17 +149,17 @@ impl Field for M31Ext3 {
         Self { v: res }
     }
 
-    #[inline(always)]
-    fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self {
-        Self {
-            v: [self.v[0] * rhs, self.v[1] * rhs, self.v[2] * rhs],
-        }
-    }
+    // #[inline(always)]
+    // fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self {
+    //     Self {
+    //         v: [self.v[0] * rhs, self.v[1] * rhs, self.v[2] * rhs],
+    //     }
+    // }
 
-    #[inline(always)]
-    fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField) {
-        *self = self.mul_base_elem(rhs);
-    }
+    // #[inline(always)]
+    // fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField) {
+    //     *self = self.mul_base_elem(rhs);
+    // }
 
     #[inline(always)]
     fn as_u32_unchecked(&self) -> u32 {

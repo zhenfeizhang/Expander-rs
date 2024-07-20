@@ -1,5 +1,6 @@
-use arith::{Field, FieldSerde, VectorizedField, VectorizedFr, VectorizedM31};
+use arith::{Field, FieldSerde, VectorizedField,  VectorizedM31};
 use expander_rs::{Circuit, CircuitLayer, Config, GateAdd, GateMul, Prover, Verifier};
+use halo2curves::bn256::Fr;
 use rand::Rng;
 use sha2::Digest;
 
@@ -15,22 +16,22 @@ fn gen_simple_circuit<F: VectorizedField>() -> Circuit<F> {
     l0.add.push(GateAdd {
         i_ids: [0],
         o_id: 0,
-        coef: F::BaseField::from(1),
+        coef: F::from(1),
     });
     l0.add.push(GateAdd {
         i_ids: [0],
         o_id: 1,
-        coef: F::BaseField::from(1),
+        coef: F::from(1),
     });
     l0.add.push(GateAdd {
         i_ids: [1],
         o_id: 1,
-        coef: F::BaseField::from(1),
+        coef: F::from(1),
     });
     l0.mul.push(GateMul {
         i_ids: [0, 2],
         o_id: 2,
-        coef: F::BaseField::from(1),
+        coef: F::from(1),
     });
     circuit.layers.push(l0.clone());
     circuit
@@ -41,13 +42,14 @@ fn test_gkr_correctness() {
     let config = Config::m31_config();
     test_gkr_correctness_helper::<VectorizedM31>(&config);
     let config = Config::bn254_config();
-    test_gkr_correctness_helper::<VectorizedFr>(&config);
+    test_gkr_correctness_helper::<Fr>(&config);
 }
 
 fn test_gkr_correctness_helper<F>(config: &Config)
-where
-    F: VectorizedField + FieldSerde,
-    F::PackedBaseField: Field<BaseField = F::BaseField>,
+where F: Field + FieldSerde 
+// where
+//     F: VectorizedField + FieldSerde,
+//     F::PackedBaseField: Field<BaseField = F>,
 {
     println!("Config created.");
     let mut circuit = Circuit::<F>::load_extracted_gates(FILENAME_MUL, FILENAME_ADD);

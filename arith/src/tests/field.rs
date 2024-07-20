@@ -20,33 +20,33 @@ pub(crate) fn test_basic_field_op<F: Field>() {
     assert_eq!(prod_0, prod_1);
 }
 
-pub(crate) fn random_small_field_tests<F: Field>(type_name: String) {
-    let mut rng = test_rng();
+// pub(crate) fn random_small_field_tests<F: Field>(type_name: String) {
+//     let mut rng = test_rng();
 
-    let _message = format!("multiplication {}", type_name);
-    let start = start_timer!(|| _message);
-    for _ in 0..1000 {
-        let a = F::random_unsafe(&mut rng);
-        let b = F::BaseField::random_unsafe(&mut rng);
-        let c = F::random_unsafe(&mut rng);
+//     let _message = format!("multiplication {}", type_name);
+//     let start = start_timer!(|| _message);
+//     for _ in 0..1000 {
+//         let a = F::random_unsafe(&mut rng);
+//         let b = F::BaseField::random_unsafe(&mut rng);
+//         let c = F::random_unsafe(&mut rng);
 
-        let mut t0 = a; // (a * b) * c
-        t0 = t0.mul_base_elem(&b);
-        t0.mul_assign(&c);
+//         let mut t0 = a; // (a * b) * c
+//         t0 = t0.mul_base_elem(&b);
+//         t0.mul_assign(&c);
 
-        let mut t1 = a; // (a * c) * b
-        t1.mul_assign(&c);
-        t1 = t1.mul_base_elem(&b);
+//         let mut t1 = a; // (a * c) * b
+//         t1.mul_assign(&c);
+//         t1 = t1.mul_base_elem(&b);
 
-        let mut t2 = c; // (b * c) * a
-        t2.mul_assign_base_elem(&b);
-        t2.mul_assign(&a);
+//         let mut t2 = c; // (b * c) * a
+//         t2.mul_assign_base_elem(&b);
+//         t2.mul_assign(&a);
 
-        assert_eq!(t0, t1);
-        assert_eq!(t1, t2);
-    }
-    end_timer!(start);
-}
+//         assert_eq!(t0, t1);
+//         assert_eq!(t1, t2);
+//     }
+//     end_timer!(start);
+// }
 
 pub fn random_field_tests<F: Field>(type_name: String) {
     let mut rng = test_rng();

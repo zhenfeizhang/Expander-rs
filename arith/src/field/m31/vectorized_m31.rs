@@ -9,7 +9,7 @@ use crate::{Field, FieldSerde, VectorizedField, M31};
 use std::{
     io::{Read, Write},
     iter::{Product, Sum},
-    mem::size_of,
+    mem::{size_of, transmute},
     ops::{Add, AddAssign, Mul, MulAssign, Neg, Sub, SubAssign},
 };
 
@@ -64,7 +64,7 @@ impl Field for VectorizedM31 {
 
     const INV_2: Self = VECTORIZEDM31_INV_2;
 
-    type BaseField = M31;
+    // type BaseField = M31;
 
     #[inline(always)]
     fn zero() -> Self {
@@ -110,32 +110,37 @@ impl Field for VectorizedM31 {
         unimplemented!()
     }
 
-    #[inline(always)]
-    fn add_base_elem(&self, _rhs: &Self::BaseField) -> Self {
-        unimplemented!()
-    }
+    // #[inline(always)]
+    // fn add_base_elem(&self, _rhs: &Self::BaseField) -> Self {
+    //     unimplemented!()
+    // }
 
-    #[inline(always)]
-    fn add_assign_base_elem(&mut self, rhs: &Self::BaseField) {
-        *self += rhs;
-    }
+    // #[inline(always)]
+    // fn add_assign_base_elem(&mut self, rhs: &Self::BaseField) {
+    //     *self += rhs;
+    // }
 
-    #[inline(always)]
-    fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self {
-        *self * rhs
-    }
+    // #[inline(always)]
+    // fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self {
+    //     *self * rhs
+    // }
 
-    #[inline(always)]
-    fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField) {
-        *self = *self * rhs;
-    }
+    // #[inline(always)]
+    // fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField) {
+    //     *self = *self * rhs;
+    // }
 
     fn as_u32_unchecked(&self) -> u32 {
         unimplemented!("self is a vector, cannot convert to u32")
     }
 
-    fn from_uniform_bytes(_bytes: &[u8; 32]) -> Self {
-        unimplemented!("vec m31: cannot convert from 32 bytes")
+    fn from_uniform_bytes(bytes: &[u8; 32]) -> Self {
+        let m = M31::from_uniform_bytes(bytes);
+        Self {
+            v: [PackedM31::pack_full(m); Self::VECTORIZE_SIZE],
+        }
+
+        // unimplemented!("vec m31: cannot convert from 32 bytes")
     }
 }
 

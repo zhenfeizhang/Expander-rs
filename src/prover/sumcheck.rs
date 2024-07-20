@@ -7,17 +7,18 @@ use crate::{CircuitLayer, Config, GkrScratchpad, SumcheckGkrHelper, Transcript};
 #[allow(clippy::type_complexity)]
 pub fn sumcheck_prove_gkr_layer<F>(
     layer: &CircuitLayer<F>,
-    rz0: &[Vec<F::BaseField>],
-    rz1: &[Vec<F::BaseField>],
-    alpha: &F::BaseField,
-    beta: &F::BaseField,
+    rz0: &[Vec<F>],
+    rz1: &[Vec<F>],
+    alpha: &F,
+    beta: &F,
     transcript: &mut Transcript,
     sp: &mut [GkrScratchpad<F>],
     config: &Config,
-) -> (Vec<Vec<F::BaseField>>, Vec<Vec<F::BaseField>>)
+) -> (Vec<Vec<F>>, Vec<Vec<F>>)
 where
-    F: VectorizedField + FieldSerde,
-    F::PackedBaseField: Field<BaseField = F::BaseField>,
+    F: Field + FieldSerde,
+    // F: VectorizedField + FieldSerde,
+    // F::PackedBaseField: Field<BaseField = F>,
 {
     let mut helpers = vec![];
     assert_eq!(config.get_num_repetitions(), sp.len());

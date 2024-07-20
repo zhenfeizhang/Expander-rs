@@ -6,8 +6,8 @@ use rand::RngCore;
 
 use crate::{Field, FieldSerde};
 
-mod vectorized_bn254;
-pub use vectorized_bn254::VectorizedFr;
+// mod vectorized_bn254;
+// pub use vectorized_bn254::VectorizedFr;
 
 impl Field for Fr {
     /// name
@@ -19,8 +19,8 @@ impl Field for Fr {
     /// Inverse of 2
     const INV_2: Self = Fr::TWO_INV;
 
-    /// type of the base field, can be itself
-    type BaseField = Self;
+    // /// type of the base field, can be itself
+    // type BaseField = Self;
 
     // ====================================
     // constants
@@ -72,25 +72,25 @@ impl Field for Fr {
         self.invert().into()
     }
 
-    /// Add the field element with its base field element
-    fn add_base_elem(&self, rhs: &Self::BaseField) -> Self {
-        self + rhs
-    }
+    // /// Add the field element with its base field element
+    // fn add_base_elem(&self, rhs: &Self::BaseField) -> Self {
+    //     self + rhs
+    // }
 
-    /// Add the field element with its base field element
-    fn add_assign_base_elem(&mut self, rhs: &Self::BaseField) {
-        *self += rhs
-    }
+    // /// Add the field element with its base field element
+    // fn add_assign_base_elem(&mut self, rhs: &Self::BaseField) {
+    //     *self += rhs
+    // }
 
-    /// multiply the field element with its base field element
-    fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self {
-        self * rhs
-    }
+    // /// multiply the field element with its base field element
+    // fn mul_base_elem(&self, rhs: &Self::BaseField) -> Self {
+    //     self * rhs
+    // }
 
-    /// multiply the field element with its base field element
-    fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField) {
-        *self *= rhs
-    }
+    // /// multiply the field element with its base field element
+    // fn mul_assign_base_elem(&mut self, rhs: &Self::BaseField) {
+    //     *self *= rhs
+    // }
 
     /// expose the element as u32.
     fn as_u32_unchecked(&self) -> u32 {

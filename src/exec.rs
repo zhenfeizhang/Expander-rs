@@ -5,10 +5,12 @@ use std::{
     sync::{Arc, Mutex},
 };
 
-use arith::{Field, FieldSerde, VectorizedField, VectorizedFr, VectorizedM31};
+use arith::{Field, FieldSerde, VectorizedField,// VectorizedFr, 
+    VectorizedM31};
 use expander_rs::{
     Circuit, Config, FieldType, Proof, Prover, Verifier, SENTINEL_BN254, SENTINEL_M31,
 };
+use halo2curves::bn256::Fr;
 use log::debug;
 use warp::Filter;
 
@@ -52,9 +54,11 @@ fn detect_field_type_from_circuit_file(circuit_file: &str) -> FieldType {
 
 async fn run_command<F>(field_type: FieldType, command: &str, circuit_file: &str, args: &[String])
 where
-    F: VectorizedField + FieldSerde + Send + 'static,
-    F::BaseField: Send,
-    F::PackedBaseField: Field<BaseField = F::BaseField>,
+    F: Field + FieldSerde + Send + 'static,
+    // where
+    //     F: VectorizedField + FieldSerde + Send + 'static,
+    //     F::BaseField: Send,
+    //     F::PackedBaseField: Field<BaseField = F::BaseField>,
 {
     let config = match field_type {
         FieldType::M31 => Config::m31_config(),
@@ -176,7 +180,7 @@ async fn main() {
             run_command::<VectorizedM31>(field_type, command, circuit_file, &args).await;
         }
         FieldType::BN254 => {
-            run_command::<VectorizedFr>(field_type, command, circuit_file, &args).await;
+            run_command::<Fr>(field_type, command, circuit_file, &args).await;
         }
         _ => unreachable!(),
     }
